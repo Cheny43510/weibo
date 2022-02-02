@@ -15,7 +15,7 @@ class UsersController extends Controller
          * 用户认证,必须先登录
          */
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store']
+            'except' => ['show', 'create', 'store','index']
         ]);
     }
     /**
@@ -92,5 +92,15 @@ class UsersController extends Controller
         session()->flash('success', '个人资料更新成功！');
 
         return redirect()->route('users.show', $user);
+    }
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function index()
+    {
+        $users = User::paginate(6);
+        return view('users.index', compact('users'));
     }
 }
